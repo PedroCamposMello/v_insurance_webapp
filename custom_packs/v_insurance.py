@@ -39,25 +39,25 @@ class V_insurance( object ):
 
         # age_profile
         conditions = [
-                    (df_02["age"].between(20, 34)),
-                    (df_02["age"].between(35, 49)),
-                    (df_02["age"].between(50, 64)),
-                    (df_02["age"] >= 65)
+                    (df_02['age'].between(20, 34)),
+                    (df_02['age'].between(35, 49)),
+                    (df_02['age'].between(50, 64)),
+                    (df_02['age'] >= 65)
                     ]
 
-        categorias = ["young", "adult", "middle-aged", "elder"]
-        df_02["age_profile"] = np.select(conditions, categorias, default="out of range")
+        categorias = ['young', 'adult', 'middle-aged', 'elder']
+        df_02['age_profile'] = np.select(conditions, categorias, default='out of range')
 
         # income_proxy
         conditions = [
-                    (df_02["annual_premium"] <= 6000),
-                    (df_02["annual_premium"].between(6001, 150000)),
-                    (df_02["annual_premium"] > 150000)
+                    (df_02['annual_premium'] <= 6000),
+                    (df_02['annual_premium'].between(6001, 150000)),
+                    (df_02['annual_premium'] > 150000)
                     ]
 
         categorias = ['0', '1', '2']
-        df_02["income_proxy"] = np.select(conditions, categorias, default="out of range")
-        df_02["income_proxy"] = df_02["income_proxy"].astype(int)
+        df_02['income_proxy'] = np.select(conditions, categorias, default='out of range')
+        df_02['income_proxy'] = df_02['income_proxy'].astype(int)
 
         return df_02
 
