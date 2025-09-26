@@ -1,14 +1,24 @@
-# Use the official Python image as the base image
+# Imagem base leve com Python 3.11
 FROM python:3.11-slim
 
-# Set the working directory in the container
+# Diretório de trabalho
 WORKDIR /app
 
-# Copy the application files into the working directory
+# Copiar dependências primeiro (cache mais eficiente)
+COPY requirements.txt .
+
+# Instalar dependências
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar todo o código
 COPY . .
 
-# Install the application dependencies
-RUN pip install -r requirements.txt
+# Definir variável de ambiente da porta
+ENV PORT=8000
 
-# Define the entry point for the container
+# Expor porta (Back4App vai mapear automaticamente)
+EXPOSE 8000
+
+# Definir entrypoint (Flask app em handler.py → variável app)
+# Gunicorn deve estar no requirements.txt
 CMD ["gunicorn", "handler:app", "-b", "0.0.0.0:${PORT}"]
